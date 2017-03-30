@@ -1,0 +1,1 @@
+https://www.codeproject.com/Articles/820877/Support-Both-Json-and-XML-Serializations-in-Spring
