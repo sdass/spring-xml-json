@@ -31,7 +31,7 @@
 	</servlet-mapping>
 	<context-param>
 	<param-name>BaseUrl</param-name>
-	<param-value>http://localhost:8080/spring-xml-json/</param-value>
+	<param-value>http://localhost:8080/whisk/</param-value>
 	
 	</context-param>
 

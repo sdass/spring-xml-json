@@ -26,6 +26,7 @@ import com.subra.whisk.model.Student;
  * Handles requests for the application home page.
  */
 @Controller
+@RequestMapping("/api")
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -47,9 +48,26 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/indexed", method = RequestMethod.GET)
+	public String getIndex(Locale locale, Model model, HttpServletRequest req) {
+		logger.info("request path=" + req.getRequestURI());// + req.;
+		logger.info(" Index! The client locale is {}.", locale);
+		
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "index";
+	}
+	
+	
 	
 	@ResponseBody
-	@RequestMapping(value = "/getstudent/{id}{name}", method=RequestMethod.GET, produces={"application/json", "application/xml"})
+	@RequestMapping(value = "/getstudent/{id}/{name}", method=RequestMethod.GET, produces={"application/json", "application/xml"})
 	public Student getStudent(HttpServletRequest request, HttpServletResponse response, @PathVariable ("id") int id, @PathVariable("name") String name){
 		
 		  // Create a new student object and return it
@@ -66,7 +84,7 @@ public class HomeController {
 	
 
 	@ResponseBody
-	@RequestMapping(value = "echostudent", method=RequestMethod.POST, consumes = {"application/json", "application/xml"}, produces={"application/json", "application/xml"})
+	@RequestMapping(value = "/echostudent", method=RequestMethod.POST, consumes = {"application/json", "application/xml"}, produces={"application/json", "application/xml"})
 	public Student echoStudent(@RequestBody Student student, HttpServletRequest request, HttpServletResponse response){
 		return student;
 	}
